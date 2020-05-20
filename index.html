@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+
+    <script src="https://cdn.ckeditor.com/ckeditor5/18.0.0/classic/ckeditor.js"></script>
+    <!-- <script src="https://cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script> -->
+
+    <!-- <script src="http://cloud.tinymce.com/stable/tinymce.min.js?apiKey=89hwbz0w1i213ug7pes3y9yhwkryq7grxy6qh7lx537q2kqy"></script> -->
+    <!-- <script src='https://cdn.tiny.cloud/1/89hwbz0w1i213ug7pes3y9yhwkryq7grxy6qh7lx537q2kqy/tinymce/5/tinymce.min.js' referrerpolicy="origin"> </script> -->
+    <!-- <script src="https://cdn.tiny.cloud/1/32v6gmx93j3ij8kgdgs26rfrvrqmknkc67e66x5kl6nhxff0/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script> -->
+
+    <!-- <script>
+      tinymce.init({
+        selector: '#mytextarea'
+      });
+    </script>
+    <style>
+        .mce-notification {display: none !important;}
+        .mce-notification-inner {display:none!important;}
+    </style> -->
+
+    <!-- <link rel="shortcut icon" href="" type="image/x-icon"> -->
+
+    <link rel="stylesheet" href="style.css">
+
+    <title></title>
+</head>
+<body>
+
+
+    <nav class="navbar navbar-light bg-light">
+        <span class="navbar-brand mb-0">Employee's Time-sheet</span>
+        <span class="navbar-brand mb-0 d-none" id="userName"></span>
+        <div class="d-flex justify-content-end">
+            <form id="logoutForm" class="form-inline d-none">
+                <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Logout</button>
+            </form>
+        </div>
+    </nav>
+
+    <div id="loader" class="loader d-none">Loading...</div>
+
+    <div class="container" style="margin-top: 15px;">
+        <div id="loginRegisterRow" class="row row-cols-1 row-cols-lg-2 justify-content-center d-none">
+            <div class="col" id="loginCol">
+                <div id="loginDiv">
+                    <h3>Login</h3>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <label for="emailLogin">Email address</label>
+                            <input required type="email" class="form-control" id="emailLogin" name="email">
+                        </div>
+                        <div class="form-group">
+                            <label for="passwordLogin">Password</label>
+                            <input required type="password" class="form-control" id="passwordLogin" name="password">
+                        </div>
+                        <button type="submit" id="loginBtn" class="btn btn-primary">Login</button>
+                    </form>
+                </div>
+            </div>
+            <!-- <div class="col-auto-md" style="margin-top: 20px;">or</div> -->
+            <div class="col" id="registerCol">
+                <div id="registerDiv">
+                    <h3>Register</h3>
+                    <div class="accordion" id="accordionExample">
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <h2 class="mb-0">
+                                <button class="btn btn-link" style="font-size: 20px; text-align: left;" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Register as an employer
+                                </button>
+                                </h2>
+                            </div>
+                        
+                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <form id="registerEmployerForm">
+                                        <div class="form-group">
+                                            <label for="nameRegisterEmployer">Company</label>
+                                            <input required type="text" class="form-control" id="nameRegisterEmployer" name="name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="emailRegisterEmployer">Email address</label>
+                                            <input required type="email" class="form-control" id="emailRegisterEmployer" name="email">
+                                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="passwordRegister">Password</label>
+                                            <input required type="password" class="form-control" id="passwordRegisterEmployer" name="password">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="reEnteredPasswordRegister">Re-enter the same Password</label>
+                                            <input required type="password" class="form-control" id="reEnteredPasswordRegisterEmployer" name="rePassword">
+                                        </div>
+                                        <button type="submit"  class="btn btn-primary">Register as an employer</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingTwo">
+                                <h2 class="mb-0">
+                                <button class="btn btn-link" style="font-size: 20px; text-align: left;" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Apply for registering as an employee
+                                </button>
+                                </h2>
+                            </div>
+                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                                <div class="card-body">
+                                    <form id="registerEmployeeForm">
+                                        <div class="form-group">
+                                            <label for="employerEmailRegisterEmployee">Company's Email address</label>
+                                            <input required type="email" class="form-control" id="employerEmailRegisterEmployee" name="employerEmail">
+                                            <small id="emailHelp" class="form-text text-muted">We'll never share your company's email with anyone else.</small>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="nameRegisterEmployee">Your full name</label>
+                                            <input required type="text" class="form-control" id="nameRegisterEmployee" name="name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="emailRegisterEmployee">Your email address</label>
+                                            <input required type="email" class="form-control" id="emailRegisterEmployee" name="email">
+                                            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="passwordRegister">Password</label>
+                                            <input required type="password" class="form-control" id="passwordRegisterEmployee" name="password">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="reEnteredPasswordRegister">Re-enter the same Password</label>
+                                            <input required type="password" class="form-control" id="reEnteredPasswordRegisterEmployee" name="rePassword">
+                                        </div>
+                                        <button type="submit"  class="btn btn-primary">Apply to register as an employee</button>
+                                        <small id="emailHelp" class="form-text text-muted">You shall be registered and notified by an email once your employer confirms.</small>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="otpRow" class="row d-none">
+            <div class="col">
+                <form id="otpForm">
+                    <div class="form-group">
+                      <label for="otp">Enter OTP sent to your email</label>
+                      <input required type="text" class="form-control" id="otp" name="otp">
+                      <small class="form-text text-muted">Hurry up, the otp will expire after 10 minutes.</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                  </form>
+            </div>
+        </div>
+        <div id="notAllowedByEmployerRow" class="row d-none">
+            <div class="col">
+                <p>Waiting for your employer to allow you.</p>
+            </div>
+        </div>
+        <div id="applicationsToJoinRow" class="row d-none">
+            <div id="applicationsToJoinCol" class="col">
+               
+            </div>
+        </div>
+        <div id="dashboardRow" class="row d-none">
+            <div id="dashboardCol" class="col">
+                
+                <div class="row d-none" id="selectDateRow">
+                    <div class="col">
+                        <div class="row justify-content-center">
+                            <div class="col-auto ">
+                                <form class="form-inline" id="selectDateForm">
+                                    <button class="btn btn-outline-primary">Find for</button>
+                                    <input required type="date" class="form-control" id="selectDateInput" name="selectDateInput" style="width: fit-content;">
+                                </form>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col" id="selectedDateTasksCol">
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <di class="col">
+                                <hr>
+                            </di>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col date" style="text-align: center;"></div>
+                </div>
+                
+               
+                <div class="row d-none" id="allowedEmployeesListRow">
+                    <div class="col">
+                        <hr>
+                        <div class="accordion" id="accordionExample">
+                            <div class="card" id="AllowedEmployeesListDiv">
+                                <div class="card-header">
+                                    <h2 class="mb-0">
+                                    <button class="btn btn-link" style="font-size: 20px; text-align: left;" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        Employees list
+                                    </button>
+                                    </h2>
+                                </div>
+                            
+                                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                                    <div class="card-body">
+                                        <ol class="list-group" id="employeesUlist">
+                                            
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row d-none" id="assignNewTaskRow">
+                    <div class="col" id="assignNewTaskCol">
+                        <hr>
+                        <h3>Assign a new task</h3>
+                        <form id="assignNewTaskForm">
+                            <div class="form-group">
+                                <label for="assignTo">Assign to</label>
+                                <input required type="text" class="form-control" id="assignTo" name="assignTo">
+                                <small class="form-text text-muted">Enter emails separated by comma. The first will be team-leader.</small>
+                            </div>
+                            <div class="form-group">
+                                <label for="taskName">Title</label>
+                                <input required type="text" class="form-control" id="taskName" name="taskName">
+                            </div>
+                            <div class="form-group">
+                                <label for="taskDetails">Details</label>
+                                <div id="editor" name="taskDetails"></div>
+                            </div>
+                            <!-- <div class="form-group">
+                                <textarea name="editor1"></textarea>
+                            </div> -->
+                            <button type="submit" id="assignNewTaskBtn" class="btn btn-primary">Assign</button>
+                        </form>
+                        <!-- <form method="post">
+                            <textarea id="mytextarea" name="mytextarea">
+                              Hello, World!
+                            </textarea>
+                        </form> -->
+                    </div>
+                    <hr>
+                </div>
+                <div class="row" id="assignedTasksRow">
+                    <div class="col" id="assignedTasksCol">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <!-- <div id="employeeDashboardRow" class="row d-none">
+            <div id="employeeDashboardCol" class="col">
+                <div class="row">
+                    <div class="col date" style="text-align: center;"></div>
+                </div>
+            </div>
+        </div> -->
+
+
+
+
+    </div>
+
+    <!-- <script type="module">
+        import { CloudinaryImageUploadAdapter } from './node_modules/ckeditor-cloudinary-uploader-adapter/dist/CloudinaryImageUploadAdapter/CloudinaryImageUploadAdapter.js';
+
+    </script> -->
+    <script type="module">
+        import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter';
+
+        let theEditor
+        ClassicEditor
+        .create( document.querySelector( '#editor' )
+            , {
+                // cloudServices: {
+                //     tokenUrl: 'https://70210.cke-cs.com/token/dev/SdFUwOue8aSjStkcF14khqPwLuLr023xFf0YNLtV4csvMGbZfdxL1BUcvoW8',
+                //     uploadUrl: 'https://70210.cke-cs.com/easyimage/upload/'
+                // }
+                plugins: [Base64UploadAdapter]
+            }
+        )
+        .then( editor => theEditor = editor)
+        .catch( error => {
+            console.error( error );
+        } );
+    </script>
+
+
+
+
+    <!-- working ..........................................................  -->
+    <!-- <script>
+        let theEditor
+        ClassicEditor
+        .create( document.querySelector( '#editor' ))
+        .then( editor => theEditor = editor)
+        .catch( error => {
+            console.error( error );
+        } );
+    </script> -->
+
+
+    <!-- <script>
+        CKEDITOR.replace( 'editor1' );
+    </script> -->
+
+    <!-- <script>
+        tinymce.init({
+          selector: 'textarea',
+          plugins: 'a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
+          toolbar: 'a11ycheck addcomment showcomments casechange checklist code formatpainter pageembed permanentpen table',
+          toolbar_mode: 'floating',
+          tinycomments_mode: 'embedded',
+          tinycomments_author: 'Author name',
+        });
+    </script> -->
+
+    <script src="func.js"></script>
+    <script src="eventListeners.js"></script>
+    <script src="app.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>

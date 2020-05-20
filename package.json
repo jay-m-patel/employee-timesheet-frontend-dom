@@ -1,0 +1,16 @@
+{
+  "name": "front-end",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "dev": "parcel index.html",
+    "build": "parcel build index.html"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@ckeditor/ckeditor5-upload": "^19.0.0",
+    "parcel-bundler": "^1.12.4"
+  }
+}
