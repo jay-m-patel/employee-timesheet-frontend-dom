@@ -1,5 +1,5 @@
 // const serverURL = `http://127.0.0.1:8080`
-const serverURL = `https://whispering-sea-27389.herokuapp.com/`
+const serverURL = `https://whispering-sea-27389.herokuapp.com`
 
 
 let token
