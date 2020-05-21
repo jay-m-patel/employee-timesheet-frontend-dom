@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@ckeditor/ckeditor5-upload": "^19.0.0"
+    "ckeditor5-build-classic-base64-upload-adapter": "^1.0.1"
   },
   "devDependencies": {
     "express": "^4.17.1"

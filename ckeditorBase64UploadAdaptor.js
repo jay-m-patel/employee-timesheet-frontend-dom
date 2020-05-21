@@ -1,3 +1,5 @@
+// const ClassicEditor = require("./node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor")
+
 
 let theEditor
 ClassicEditor
