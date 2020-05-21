@@ -10,5 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "@ckeditor/ckeditor5-upload": "^19.0.0"
+  },
+  "devDependencies": {
+    "express": "^4.17.1"
   }
 }

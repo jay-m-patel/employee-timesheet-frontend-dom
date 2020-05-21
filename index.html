@@ -6,24 +6,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
 
-    <script src="https://cdn.ckeditor.com/ckeditor5/18.0.0/classic/ckeditor.js"></script>
-    <!-- <script src="https://cdn.ckeditor.com/4.14.0/standard/ckeditor.js"></script> -->
+    <script src="https://cdn.ckeditor.com/ckeditor5/19.0.0/classic/ckeditor.js"></script>
 
-    <!-- <script src="http://cloud.tinymce.com/stable/tinymce.min.js?apiKey=89hwbz0w1i213ug7pes3y9yhwkryq7grxy6qh7lx537q2kqy"></script> -->
-    <!-- <script src='https://cdn.tiny.cloud/1/89hwbz0w1i213ug7pes3y9yhwkryq7grxy6qh7lx537q2kqy/tinymce/5/tinymce.min.js' referrerpolicy="origin"> </script> -->
-    <!-- <script src="https://cdn.tiny.cloud/1/32v6gmx93j3ij8kgdgs26rfrvrqmknkc67e66x5kl6nhxff0/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script> -->
-
-    <!-- <script>
-      tinymce.init({
-        selector: '#mytextarea'
-      });
-    </script>
-    <style>
-        .mce-notification {display: none !important;}
-        .mce-notification-inner {display:none!important;}
-    </style> -->
-
-    <!-- <link rel="shortcut icon" href="" type="image/x-icon"> -->
 
     <link rel="stylesheet" href="style.css">
 
@@ -273,59 +257,11 @@
 
     </div>
 
-    <!-- <script type="module">
-        import { CloudinaryImageUploadAdapter } from './node_modules/ckeditor-cloudinary-uploader-adapter/dist/CloudinaryImageUploadAdapter/CloudinaryImageUploadAdapter.js';
-
-    </script> -->
     <script type="module">
-        import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter';
-
-        let theEditor
-        ClassicEditor
-        .create( document.querySelector( '#editor' )
-            , {
-                // cloudServices: {
-                //     tokenUrl: 'https://70210.cke-cs.com/token/dev/SdFUwOue8aSjStkcF14khqPwLuLr023xFf0YNLtV4csvMGbZfdxL1BUcvoW8',
-                //     uploadUrl: 'https://70210.cke-cs.com/easyimage/upload/'
-                // }
-                plugins: [Base64UploadAdapter]
-            }
-        )
-        .then( editor => theEditor = editor)
-        .catch( error => {
-            console.error( error );
-        } );
+        // import Base64UploadAdapter from '@ckeditor/ckeditor5-upload/src/adapters/base64uploadadapter.js';        
     </script>
+    <script src="ckeditorBase64UploadAdaptor.js"></script>
 
-
-
-
-    <!-- working ..........................................................  -->
-    <!-- <script>
-        let theEditor
-        ClassicEditor
-        .create( document.querySelector( '#editor' ))
-        .then( editor => theEditor = editor)
-        .catch( error => {
-            console.error( error );
-        } );
-    </script> -->
-
-
-    <!-- <script>
-        CKEDITOR.replace( 'editor1' );
-    </script> -->
-
-    <!-- <script>
-        tinymce.init({
-          selector: 'textarea',
-          plugins: 'a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
-          toolbar: 'a11ycheck addcomment showcomments casechange checklist code formatpainter pageembed permanentpen table',
-          toolbar_mode: 'floating',
-          tinycomments_mode: 'embedded',
-          tinycomments_author: 'Author name',
-        });
-    </script> -->
 
     <script src="func.js"></script>
     <script src="eventListeners.js"></script>
