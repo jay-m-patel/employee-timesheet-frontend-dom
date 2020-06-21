@@ -1,6 +1,37 @@
-// const serverURL = `http://127.0.0.1:8080`
-const serverURL = `https://whispering-sea-27389.herokuapp.com`
+const serverURL = `http://127.0.0.1:8080`
+// const serverURL = `https://whispering-sea-27389.herokuapp.com`
 
+
+// import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
+import Editor from './../my_node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor'
+
+
+
+let theEditor
+Editor
+.create( document.querySelector( '#editor' )
+    , {
+        // SimpleUploadAdapter has been manually added to built-in plugins.
+        simpleUpload: {
+            // The URL that the images are uploaded to.
+            uploadUrl: `${serverURL}/simpleUploadAdapter`,
+
+        }
+    }
+)
+.then( editor => theEditor = editor)
+.catch( error => {
+    console.error( error );
+} );
+
+
+
+
+
+
+
+
+// func.js
 
 let token
 
@@ -182,8 +213,8 @@ const dashboard = response => {
                                 <div class="row row-cols-1 row-cols-lg">
                                     <div class="col col-12 col-lg-10">
                                         <div class="custom-file mb-3">
-                                            <input required type="file" accept="image/*" class="custom-file-input" id="imageUploadInput--${task._id}" name="imageUploadInput">
-                                            <label class="custom-file-label" for="imageUploadInput" id="imageUploadInput--${task._id}-label">Choose file to report submition</label>
+                                            <input required type="file" accept="image/*" class="custom-file-input" id="imageUploadInput--${task._id}" name="upload">
+                                            <label class="custom-file-label" for="upload" id="imageUploadInput--${task._id}-label">Choose file to report submition</label>
                                         </div>
                                     </div>
                                     <div class="col-auto">
@@ -200,7 +231,7 @@ const dashboard = response => {
                 taskDiv.appendChild(imageUploadFormDiv)
 
                 document.querySelector(`#imageUploadInput--${task._id}`).addEventListener("change", event => {
-                    // console.log(event.target.value, "event.terget imageUploadInput")
+                    console.log(event.target.value, typeof(event.target.value),"event.terget imageUploadInput")
                     let showFileName = ""
                     for(l of event.target.value) {
                         if(l == "\\" || l == "/") showFileName = ""
@@ -687,3 +718,193 @@ const errorInResponse = response => {
         
     }
 }
+
+
+
+
+
+
+
+// eventListeners.js
+
+document.querySelector('#loginForm').addEventListener("submit", (event) => {
+    event.preventDefault()
+    
+    postLogin(event.target)
+    .then((response) => {
+
+        // console.log(response, "response at postLogin!!!")
+        document.querySelector('#loader').classList.add('d-none')            
+
+        if(response.err) return errorInResponse(response) //
+        dashboard(response)
+
+    })
+    .catch((reject) => console.log(reject))
+    
+})
+
+document.querySelector('#registerEmployerForm').addEventListener("submit", (event) => {
+    event.preventDefault()
+    
+    postRegisterEmployer(event.target)
+    .then((response) => {
+        console.log(response)
+        token = response.token
+        console.log(token, 'token eventListener registerEmployer')
+        if(response.user && !response.user.isEmailverified && response.OTPsent) {
+            document.querySelector('#loader').classList.add('d-none')
+            document.querySelector('#otpRow').classList.remove('d-none')
+            
+
+        }
+    })
+    .catch((reject) => console.log(reject))
+    
+})
+
+document.querySelector('#registerEmployeeForm').addEventListener("submit", (event) => {
+    event.preventDefault()
+    
+    postRegisterEmployee(event.target)
+    .then((response) => {
+        console.log(response)
+        token = response.token
+        console.log(token, 'token eventListener registerEmployee')
+
+        if(response.user && !response.user.isEmailverified && response.OTPsent) {
+            document.querySelector('#loader').classList.add('d-none')
+            document.querySelector('#otpRow').classList.remove('d-none')
+            
+            
+
+        }
+
+    })
+    .catch((reject) => console.log(reject))
+    
+})
+
+document.querySelector('#otpForm').addEventListener('submit', event => {
+    event.preventDefault()
+
+    postOtp(event.target)
+    .then((response)=> {
+        document.querySelector('#loader').classList.add('d-none')
+        console.log(response)
+
+
+        if(response.user && response.user.isLoggedIn) document.querySelector('#logoutForm').classList.remove('d-none')
+        if(response.user && !response.user.isEmployer && !response.user.allowedByEmployer) return document.querySelector('#notAllowedByEmployerRow').classList.remove('d-none')
+        
+        dashboard(response)        
+
+
+    })
+    .catch((reject) => console.log(reject))
+} )
+
+
+document.querySelector('#logoutForm').addEventListener('submit', event => {
+    event.preventDefault()
+
+    deleteLogout()
+    .then(response => {
+        document.querySelector('#loader').classList.add('d-none')
+        document.querySelector('#logoutForm').classList.add('d-none')
+        document.querySelector('#userName').classList.add('d-none')
+        document.querySelector('#loginRegisterRow').classList.remove('d-none')
+     
+
+
+        document.querySelector('#emailLogin').value = ''
+        document.querySelector('#passwordLogin').value = ''
+
+        document.querySelector('#nameRegisterEmployer').value = ''
+        document.querySelector('#emailRegisterEmployer').value = ''
+        document.querySelector('#passwordRegisterEmployer').value = ''
+        document.querySelector('#reEnteredPasswordRegisterEmployer').value = ''
+
+        document.querySelector('#employerEmailRegisterEmployee').value = ''
+        document.querySelector('#nameRegisterEmployee').value = ''
+        document.querySelector('#emailRegisterEmployee').value = ''
+        document.querySelector('#passwordRegisterEmployee').value = ''
+        document.querySelector('#reEnteredPasswordRegisterEmployee').value = ''
+
+
+        console.log(response)
+        
+        console.log(token, 'token1')
+        token = undefined
+        console.log(token, 'token2')
+
+    })
+    .catch(reject => console.log(reject))
+
+})
+
+
+document.querySelector('#assignNewTaskForm').addEventListener('submit', event => {
+    event.preventDefault()
+
+    assignNewTask(event.target)
+    .then(response => {
+        document.querySelector('#loader').classList.add('d-none')
+        document.querySelector('#dashboardRow').classList.remove('d-none')
+
+        event.target.assignTo.value = ""
+        event.target.taskName.value = ""
+        console.log(document.querySelector('.ck-content').childNodes, 'innerHTML of ck-content') 
+
+        theEditor.setData('')
+        console.log(response)
+
+        dashboard(response)
+
+    })
+    .catch(reject => console.log(reject))
+})
+
+
+document.querySelector('#selectDateForm').addEventListener("submit", event => {
+    event.preventDefault()
+    console.log(event.target.selectDateInput.value)
+    let selectDate = new Date(event.target.selectDateInput.value)
+    selectDate = selectDate.toString()
+    selectDate = selectDate.replace(" ", "_").replace(" ", "_").replace(" ", "_")
+    selectDate = selectDate.split(" ")[0]
+    console.log(selectDate)
+
+    getSelectedDate(selectDate)
+    .then(response => {
+        console.log(response)
+        showSelectedDateTasks(response)
+    })
+    .catch(reject => console.log(reject))
+
+})
+
+
+
+
+
+// app.js
+
+
+
+
+firstFetch()
+.then((response) => {
+    
+    // console.log(response, "response at firstFetch")
+
+    document.querySelector('#loader').classList.add('d-none')
+    
+    if(response.err) return errorInResponse(response)
+    dashboard(response)
+    
+   
+})
+.catch((reject) => console.log(reject))
+
+

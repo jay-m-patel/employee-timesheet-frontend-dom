@@ -1,5 +1,5 @@
 node_modules
-dist
+my_node_modules
 .cache
 .env
 serverFrontEnd.js
