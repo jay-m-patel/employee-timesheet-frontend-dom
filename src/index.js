@@ -657,7 +657,7 @@ const showSelectedDateTasks = response => {
         selectedDateTasks
     } = response
     if(selectedDateTasks) {
-        selectedDate = selectedDateTasks.date.replace("_",", ").replace("_"," ").replace("_"," ")
+        let selectedDate = selectedDateTasks.date.replace("_",", ").replace("_"," ").replace("_"," ")
 
         let selectedDateTasksCol = document.querySelector('#selectedDateTasksCol')
         selectedDateTasksCol.innerHTML = ""
