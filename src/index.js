@@ -1,9 +1,12 @@
-const serverURL = `http://127.0.0.1:8080`
-// const serverURL = `https://whispering-sea-27389.herokuapp.com`
 
 
 // import ClassicEditor from '@ckeditor/ckeditor5-build-classic'
 import Editor from './../my_node_modules/@ckeditor/ckeditor5-build-classic/build/ckeditor'
+
+
+
+// const serverURL = `http://127.0.0.1:8080`
+const serverURL = `https://whispering-sea-27389.herokuapp.com`
 
 
 
@@ -23,7 +26,6 @@ Editor
 .catch( error => {
     console.error( error );
 } );
-
 
 
 
@@ -213,8 +215,8 @@ const dashboard = response => {
                                 <div class="row row-cols-1 row-cols-lg">
                                     <div class="col col-12 col-lg-10">
                                         <div class="custom-file mb-3">
-                                            <input required type="file" accept="image/*" class="custom-file-input" id="imageUploadInput--${task._id}" name="upload">
-                                            <label class="custom-file-label" for="upload" id="imageUploadInput--${task._id}-label">Choose file to report submition</label>
+                                            <input required type="file" accept="image/*" class="custom-file-input" id="imageUploadInput--${task._id}" name="imageUploadInput">
+                                            <label class="custom-file-label" for="imageUploadInput" id="imageUploadInput--${task._id}-label">Choose file to report submition</label>
                                         </div>
                                     </div>
                                     <div class="col-auto">
@@ -231,11 +233,17 @@ const dashboard = response => {
                 taskDiv.appendChild(imageUploadFormDiv)
 
                 document.querySelector(`#imageUploadInput--${task._id}`).addEventListener("change", event => {
-                    console.log(event.target.value, typeof(event.target.value),"event.terget imageUploadInput")
+                    // console.log(event.target.value, typeof(event.target.value),"event.target.value imageUploadInput")
+                    
                     let showFileName = ""
-                    for(l of event.target.value) {
-                        if(l == "\\" || l == "/") showFileName = ""
-                        else showFileName = showFileName + l
+                    // for(l of event.target.value) {
+                    //     console.log(l, 'l')
+                    //     if(l == "\\" || l == "/") showFileName = ""
+                    //     else showFileName = showFileName + l
+                    // }
+                    for(let i = 0; i < event.target.value.length; i++) {
+                        if(event.target.value[i] == "\\" || event.target.value[i] == "/") showFileName = ""
+                        else showFileName = showFileName + event.target.value[i]
                     }
                     document.querySelector(`#imageUploadInput--${task._id}-label`).innerText = showFileName
                  
@@ -725,6 +733,7 @@ const errorInResponse = response => {
 
 
 
+
 // eventListeners.js
 
 document.querySelector('#loginForm').addEventListener("submit", (event) => {
@@ -888,9 +897,10 @@ document.querySelector('#selectDateForm').addEventListener("submit", event => {
 
 
 
+
+
+
 // app.js
-
-
 
 
 firstFetch()
@@ -906,5 +916,7 @@ firstFetch()
    
 })
 .catch((reject) => console.log(reject))
+
+
 
 
